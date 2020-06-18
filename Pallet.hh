@@ -6,16 +6,16 @@
 
 class Pallet {
   public:
-    Pallet (const uint productID, const Height height, const float quantity=0)
-      : productID(productID), height(height), quantity(quantity) {}
-    const int getProductID() const { return productID; }
-    const Height getHeight() const { return height; }
-    const float getQuantity() const { return quantity; }
+    Pallet (const uint product_id, const Height height, const float quantity=0)
+      : product_id_(product_id), height_(height), quantity_(quantity) {}
+    const int getProductID() const { return product_id_; }
+    const Height getHeight() const { return height_; }
+    const float getQuantity() const { return quantity_; }
 
   private:
-    const uint productID;
-    const Height height;
-    const float quantity; // pieces
+    const uint product_id_;
+    const Height height_;
+    const float quantity_; // pieces
 };
 
 std::ostream& operator << (std::ostream& s, const Pallet& p){
