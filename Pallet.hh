@@ -2,18 +2,19 @@
 #define PALLET_HH
 
 #include <ostream>
+#include "Length.hh"
 
 class Pallet {
   public:
-    Pallet (const uint productID, const float height, const float quantity=0)
+    Pallet (const uint productID, const Height height, const float quantity=0)
       : productID(productID), height(height), quantity(quantity) {}
     const int getProductID() const { return productID; }
-    const float getHeight() const { return height; }
+    const Height getHeight() const { return height; }
     const float getQuantity() const { return quantity; }
 
   private:
     const uint productID;
-    const float height;
+    const Height height;
     const float quantity; // pieces
 };
 
