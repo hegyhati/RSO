@@ -14,7 +14,7 @@ class Pallet {
 
     auto getProductID() const noexcept -> const int { return product_id_; }
     auto getHeight() const noexcept -> const Height{ return height_; }
-    auto getQuantity() const  noexcept -> double { return quantity_; }
+    auto getQuantity() const noexcept -> double { return quantity_; }
 
   private:
     const uint product_id_;

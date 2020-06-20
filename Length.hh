@@ -22,10 +22,11 @@ class BasicLength {
   
   protected:
     BasicLength(float length_in_meter);
-    bool operator < (const BasicLength& other) const;
-    bool operator <= (const BasicLength& other) const;
-    BasicLength operator + (const BasicLength& other) const;
-    BasicLength operator - (const BasicLength& other) const;
+    auto operator <  (const BasicLength& other) const -> bool;
+    auto operator <= (const BasicLength& other) const -> bool;
+    auto operator +  (const BasicLength& other) const -> BasicLength;
+    auto operator -  (const BasicLength& other) const -> BasicLength;
+    auto operator += (const BasicLength& other) -> BasicLength&;
 
   private:
     void parseFromStream(std::istream& s);
@@ -43,10 +44,11 @@ class Length : public BasicLength {
     Length(const std::string& s) : BasicLength(s) {}
     Length(const char* s) : BasicLength(s) {}
 
-    bool operator < (const Length<E>& other) const { return *this < other; } 
-    bool operator <= (const Length<E>& other) const { return *this <= other; }
-    Length<E> operator + (const Length<E>& other) const { return *this + other; }
-    Length<E> operator - (const Length<E>& other) const { return *this - other; }
+    auto operator <  (const Length<E>& other) const -> bool       { return this->BasicLength::operator< (other); } 
+    auto operator <= (const Length<E>& other) const -> bool       { return this->BasicLength::operator<=(other); }
+    auto operator +  (const Length<E>& other) const -> Length<E>  { return static_cast<Length<E> >(this->BasicLength::operator+ (other)); }
+    auto operator -  (const Length<E>& other) const -> Length<E>  { return static_cast<Length<E> >(this->BasicLength::operator- (other)); }
+    auto operator += (const Length<E>& other) -> Length<E>&       { return static_cast<Length<E>&>(this->BasicLength::operator+=(other)); }
 };
 
 using Height = Length<LengthType::height>;

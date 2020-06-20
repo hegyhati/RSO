@@ -72,3 +72,7 @@ BasicLength BasicLength::operator + (const BasicLength& other) const {
 BasicLength BasicLength::operator - (const BasicLength& other) const {
   return BasicLength(length_in_meter_+other.length_in_meter_);
 }
+BasicLength& BasicLength::operator += (const BasicLength& other) {
+  length_in_meter_ += other.length_in_meter_;
+  return *this;
+}
