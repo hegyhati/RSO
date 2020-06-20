@@ -8,9 +8,13 @@ class Pallet {
   public:
     Pallet (const uint product_id, const Height height, const float quantity=0)
       : product_id_(product_id), height_(height), quantity_(quantity) {}
-    const int getProductID() const { return product_id_; }
-    const Height getHeight() const { return height_; }
-    const float getQuantity() const { return quantity_; }
+
+    Pallet (const Pallet&) = delete;
+    Pallet& operator= (const Pallet&) = delete;
+
+    auto getProductID() const noexcept -> const int { return product_id_; }
+    auto getHeight() const noexcept -> const Height{ return height_; }
+    auto getQuantity() const  noexcept -> double { return quantity_; }
 
   private:
     const uint product_id_;
@@ -18,15 +22,6 @@ class Pallet {
     const float quantity_; // pieces
 };
 
-std::ostream& operator << (std::ostream& s, const Pallet& p){
-  return s << "[ "
-           << "Product: " << p.getProductID()
-           << " | "
-           << "Height: " << p.getHeight()
-           << " | "
-           << "Quantity: " << p.getQuantity()
-           << " ]";
-}
-
+std::ostream& operator << (std::ostream& s, const Pallet& p);
 
 #endif // PALLET_HH

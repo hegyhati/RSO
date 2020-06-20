@@ -2,10 +2,13 @@
 using namespace std;
 
 
-#include "Pallet.hh"
+#include "PalletRow.hh"
 
 int main(){
-  Pallet p(13,"39 dm",42);
+  PalletRow test=PalletRow("13cm");
+  auto Pallet1=std::make_unique<Pallet>(13,"6cm",45);
+  test.put(Pallet1,3);
+  test.put(Pallet1,4);
 
-  cout << p << endl;
+  cout << test;
 }
