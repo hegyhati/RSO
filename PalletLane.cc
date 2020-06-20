@@ -17,7 +17,7 @@ bool PalletLane::put(Pallet::Ptr& pallet, uint row, uint column) noexcept {
   return pallet_rows_[row].put(pallet,column);
 }
 
-Height PalletLane::getTotalHeight() const {
+Height PalletLane::getTotalHeight() const noexcept{
   Height total("0m");
   for(const auto& row: pallet_rows_)
     total+=row.height;
@@ -25,7 +25,13 @@ Height PalletLane::getTotalHeight() const {
 }
 
 std::ostream& operator << (std::ostream& s, const PalletLane& pl){
-  s << "  Lane total height: " << pl.getTotalHeight() << std::endl;
+  s << "  Lane [" << pl.getNumber() << "] total height: " << pl.getTotalHeight() << std::endl;
   for(uint row=0; row<pl.row_count; ++row) s<<pl[row];
   return s;
+}
+
+uint PalletLane::getNumber() const noexcept {
+  for(uint lane=0; lane<block.lane_count; ++lane)
+    if(& (block[lane]) == this) return lane;  
+  return block.lane_count;
 }
