@@ -16,6 +16,8 @@ class PalletBlock {
     
     auto operator [] (uint lane) const noexcept -> const PalletLane& ;
     auto put(Pallet::Ptr& pallet, uint lane, uint row, uint column) noexcept -> bool;
+    auto isEmpty(uint lane, uint row, uint column) const noexcept -> bool;
+    auto isAccessible(Height object_height, uint lane, uint row, uint column) const noexcept -> bool;
     
   private:
     std::vector<PalletLane> pallet_lanes_;    

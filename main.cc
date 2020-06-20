@@ -2,28 +2,61 @@
 using namespace std;
 
 
+#include "Forklift.hh"
 #include "PalletBlock.hh"
 
 int main(){
   PalletBlock block({
+    {"2m","3m","4m"},
     {"12cm", "1500cm","19m"},
     {"4cm","8km","6in","4ft"}
   }, 19);  
 
-  cout << block;
-  auto Pallet1=std::make_unique<const Pallet>(1,"6cm",45);
-  auto Pallet2=std::make_unique<const Pallet>(2,"25cm",9);
-  auto Pallet3=std::make_unique<const Pallet>(3,"6cm",45);
+  Forklift fl("4m"); // 2 rows need to be cleared in the first lane
 
-  block.put(Pallet1,0,0,0);
-  block.put(Pallet1,0,0,1); // already used
-  block.put(Pallet2,0,0,2); // can't fit 25 cm > 12 cm
-  block.put(Pallet2,0,1,0);
-  block.put(Pallet3,0,1,0); // Occupied
-  block.put(Pallet3,0,1,51); // column index out of range 
-  block.put(Pallet3,0,1,15); 
+  Pallet::Ptr input_buffer;
+  
 
-  cout << block;
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Make Palett and load to Forklift \n\n";
+  input_buffer=std::make_unique<const Pallet>(1,"1m",45);
+  fl.load(input_buffer);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Unload content to position 0,0,0 \n\n";
+  fl.unload(block,0,0,0);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Make Palett and load to Forklift \n\n";
+  input_buffer=std::make_unique<const Pallet>(2,"3.5m",45);
+  fl.load(input_buffer);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Try to unload to the same position and fail \n\n";
+  fl.unload(block,0,0,0);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Try to unload to the position behind and fail \n\n";
+  fl.unload(block,0,0,1);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Try to unload to the position above and fail due to size \n\n";
+  fl.unload(block,0,1,0);
+  cerr << block;
+  cerr << fl;
+
+  cerr << "\n\n Try to unload to the position above that and succeed \n\n";
+  fl.unload(block,0,2,0);
+  cerr << block;
+  cerr << fl;
+  
 }
 
 

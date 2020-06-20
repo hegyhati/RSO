@@ -33,6 +33,11 @@ std::ostream& operator << (std::ostream& s, const PalletRow& pr) {
   return s;
 }
 
+bool PalletRow::isEmpty(uint column) const noexcept {
+  if(column >= lane.block.column_count ) return false;
+  else return ! pallets_[column];
+}
+
 uint PalletRow::getLevel() const noexcept {
   for(uint row=0; row<lane.row_count; ++row)
     if(& (lane[row]) == this) return row;  

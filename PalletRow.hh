@@ -22,6 +22,7 @@ class PalletRow {
     auto operator [] (uint column) const noexcept(false) -> const Pallet& ;
     auto put(Pallet::Ptr& pallet, uint column) noexcept -> bool;
     auto getTakenSlots() const noexcept -> std::vector<uint>;
+    auto isEmpty(uint column) const noexcept -> bool;
     auto getLevel() const noexcept -> uint;
     
   private:
