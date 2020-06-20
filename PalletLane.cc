@@ -4,7 +4,7 @@
 PalletLane::PalletLane(std::vector<Height> row_heights)
 : row_count(row_heights.size()) {
   for(uint row=0; row<row_count; ++row)
-    pallet_rows_.push_back(PalletRow(row_heights[row]));
+    pallet_rows_.push_back(PalletRow(row_heights[row], *this));
 }
 
 const PalletRow& PalletLane::operator [] (uint row) const noexcept {
