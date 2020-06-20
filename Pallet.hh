@@ -2,10 +2,13 @@
 #define PALLET_HH
 
 #include <ostream>
+#include <memory>
 #include "Length.hh"
 
 class Pallet {
   public:
+    typedef std::unique_ptr<const Pallet> Ptr;
+
     Pallet (const uint product_id, const Height height, const float quantity=0)
       : product_id_(product_id), height_(height), quantity_(quantity) {}
 

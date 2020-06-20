@@ -7,14 +7,17 @@
 #include <iostream>
 #include <vector>
 
+class PalletBlock;
+
 class PalletLane {
   public:
+    const PalletBlock& block;
     const uint row_count;
 
-    PalletLane(std::vector<Height> row_heights);
+    PalletLane(std::vector<Height> row_heights, PalletBlock& block);
     
     auto operator [] (uint row) const noexcept -> const PalletRow& ;
-    auto put(std::unique_ptr<Pallet>& pallet, uint row, uint column) noexcept -> bool;
+    auto put(Pallet::Ptr& pallet, uint row, uint column) noexcept -> bool;
     auto getTotalHeight() const -> Height;
     
   private:
