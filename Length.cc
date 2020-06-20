@@ -2,7 +2,8 @@
 
 #include <sstream>
 
-const std::map < const std::string, const float > BasicLength::unit_multipliers = {
+const std::map < const std::string, const float > 
+BasicLength::unit_multipliers = {
       { "km"  , 1000    },
       { "m"   , 1       },
       { "dm"  , 0.1     },
@@ -16,13 +17,15 @@ const std::map < const std::string, const float > BasicLength::unit_multipliers 
       { "\""  , 0.0254  }
     };
 
-float BasicLength::convert (float quantity, std::string fromUnit, std::string toUnit){
+float 
+BasicLength::convert (float quantity, std::string fromUnit, std::string toUnit){
   if ( unit_multipliers.count(fromUnit) && unit_multipliers.count(toUnit)) 
     return quantity * unit_multipliers.at(fromUnit) / unit_multipliers.at(toUnit);
   else return 0;
 }
 
-void BasicLength::parseFromStream(std::istream& s){
+void 
+BasicLength::parseFromStream(std::istream& s){
   float length;
   s >> length;
   std::string unit;
@@ -43,16 +46,19 @@ BasicLength::BasicLength(const char* s){
   parseFromStream(iss);
 }
 
-float BasicLength::to(std::string unit) const { return convert(length_in_meter_,"m",unit); }
+float 
+BasicLength::to(std::string unit) const { return convert(length_in_meter_,"m",unit); }
 
-std::string BasicLength::getSuggestedUnit() const {
+std::string 
+BasicLength::getSuggestedUnit() const {
   if (length_in_meter_>=1000) return "km";
   else if (length_in_meter_ < 1 && length_in_meter_ >= 0.01 ) return "cm";
   else if (length_in_meter_ < 0.01 && length_in_meter_ > 0 ) return "mm";
   else return "m";
 }
 
-std::ostream& operator << (std::ostream& s, const BasicLength& l){ 
+std::ostream& 
+operator << (std::ostream& s, const BasicLength& l){ 
   return s << l.to(l.getSuggestedUnit()) << " " << l.getSuggestedUnit();
 }
 
@@ -60,19 +66,28 @@ std::ostream& operator << (std::ostream& s, const BasicLength& l){
 BasicLength::BasicLength(float length_in_meter)
   : length_in_meter_(length_in_meter) {}
 
-bool BasicLength::operator < (const BasicLength& other) const {
+bool 
+BasicLength::operator < (const BasicLength& other) const {
   return length_in_meter_ < other.length_in_meter_;
 }
-bool BasicLength::operator <= (const BasicLength& other) const {
+
+bool 
+BasicLength::operator <= (const BasicLength& other) const {
   return length_in_meter_ <= other.length_in_meter_;
 }
-BasicLength BasicLength::operator + (const BasicLength& other) const {
+
+BasicLength 
+BasicLength::operator + (const BasicLength& other) const {
   return BasicLength(length_in_meter_+other.length_in_meter_);
 }
-BasicLength BasicLength::operator - (const BasicLength& other) const {
+
+BasicLength 
+BasicLength::operator - (const BasicLength& other) const {
   return BasicLength(length_in_meter_+other.length_in_meter_);
 }
-BasicLength& BasicLength::operator += (const BasicLength& other) {
+
+BasicLength& 
+BasicLength::operator += (const BasicLength& other) {
   length_in_meter_ += other.length_in_meter_;
   return *this;
 }
