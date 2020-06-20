@@ -3,10 +3,10 @@
 std::ostream& 
 operator << (std::ostream& s, const Pallet& p){
   return s << "[ "
-           << "Product: " << p.getProductID()
+           << "Product: " << p.product_id
            << " | "
-           << "Height: " << p.getHeight()
+           << "Height: " << p.height
            << " | "
-           << "Quantity: " << p.getQuantity()
+           << "Quantity: " << p.quantity
            << " ]";
 }

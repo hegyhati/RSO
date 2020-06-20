@@ -7,7 +7,7 @@ PalletRow::PalletRow(const Height& height, const PalletLane& lane)
 
 bool 
 PalletRow::put(Pallet::Ptr& pallet, uint column) noexcept {
-  if (column >= lane.block.column_count || pallets_[column] || !pallet || height < pallet->getHeight()) return false;
+  if (column >= lane.block.column_count || pallets_[column] || !pallet || height < pallet->height) return false;
   else {
     pallets_[column] = std::move(pallet);
     return true;
