@@ -1,7 +1,7 @@
 #include "Forklift.hh"
 
 
-Forklift::Forklift(Height height) : height(height) {}
+Forklift::Forklift(Height height) : ActingPalletContainer<bool>(height) {}
 
 bool 
 Forklift::isLoaded() const noexcept {

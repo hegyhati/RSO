@@ -14,8 +14,6 @@ class Forklift : public ActingPalletContainer<bool> {
       std::string message;
     };
 
-    const Height height;
-
     Forklift(Height height);
 
     auto isLoaded() const noexcept -> bool;

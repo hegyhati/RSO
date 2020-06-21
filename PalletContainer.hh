@@ -26,6 +26,8 @@ class PalletContainer : public Serializable {
     }
 };
 
+class NotApproachableException{};
+
 template<typename PositionType>
 class ApproachablePalletContainer : public PalletContainer<PositionType>{
   public:
@@ -46,14 +48,27 @@ class ActingPalletContainer : public PalletContainer<PositionType> {
         return true;
       }    
     }
+
+    template<typename PositionTypeOther>
+    auto canApproach(const ApproachablePalletContainer<PositionTypeOther>& container, PositionTypeOther position) const -> bool{
+      return container.isApproachable(this->height,position);
+    }
+
+  protected:
+    ActingPalletContainer(Height height) : height(height) {}
+    
   public:
+    const Height height;
+
     template<typename PositionTypeOther>
     auto unload(PositionType position, ApproachablePalletContainer<PositionTypeOther>& other_container, PositionTypeOther other_position) -> bool{
-      return move(*this,position,other_container,other_position);      
+      if (!canApproach(other_container,other_position)) throw NotApproachableException();
+      else return move(*this,position,other_container,other_position);      
     }
     template<typename PositionTypeOther>
     auto load(PositionType position, ApproachablePalletContainer<PositionTypeOther>& other_container, PositionTypeOther other_position) -> bool{
-      return move(other_container,other_position,*this,position);            
+      if (!canApproach(other_container,other_position)) throw NotApproachableException();
+      else return move(other_container,other_position,*this,position);            
     }
 };
 

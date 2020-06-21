@@ -53,6 +53,7 @@ struct TestSystem : public Serializable{
         catch (OccupiedPositionException) { cout << "Position already occupied in the block\n"; toPrint=false;}
         catch (WrongPositionException) {cout << "No such position at the block\n"; toPrint=false;}
         catch (Pallet::NoPalletException) {cout << "No pallet on the forklift\n"; toPrint=false;}
+        catch (NotApproachableException) {cout << "Position can not be approached by forklift\n"; toPrint=false;}
       } else {
         cout << "Wrong command";
         cin.ignore(500,'\n');
