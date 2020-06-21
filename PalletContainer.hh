@@ -15,16 +15,6 @@ class PalletContainer : public Serializable {
     virtual auto isValid (Position position) const noexcept -> bool =0; 
     virtual auto getPallet (Position position) const noexcept -> const Pallet::Ptr& =0;
 
-    auto put(Pallet::Ptr& pallet, Position position) noexcept(false) -> bool { //could be void later
-      if(!isEmpty(position)) throw OccupiedPositionException();
-      else {
-        // TODO height is not checked
-        // How to do without const cast and removing the need for the definition of a const and a non-const getter?
-        const_cast<Pallet::Ptr&>(getPallet(position)) = std::move(pallet);
-        return true;
-      }
-    }
-
     auto operator[] (Position position) const noexcept(false) -> const Pallet& {
       if(isEmpty(position)) throw Pallet::NoPalletException();
       else return *getPallet(position);
@@ -42,7 +32,28 @@ class ApproachablePalletContainer : public PalletContainer<PositionType>{
     virtual auto isApproachable(Height object_height, PositionType position) const noexcept(false) -> bool =0;
 };
 
-
+template<typename PositionType>
+class ActingPalletContainer : public PalletContainer<PositionType> {
+  private:
+    template<typename PTypeFrom, typename PTypeTo>
+    static auto move(PalletContainer<PTypeFrom>& from_container, PTypeFrom from_position, PalletContainer<PTypeTo>& to_container, PTypeTo to_position) -> bool {
+      if (!from_container.getPallet(from_position)) return false;
+      else if (!to_container.isEmpty(to_position)) throw OccupiedPositionException();
+      else {
+        const_cast<Pallet::Ptr&>(to_container.getPallet(to_position)) = std::move(const_cast<Pallet::Ptr&>(from_container.getPallet(from_position)));
+        return true;
+      }    
+    }
+  public:
+    template<typename PositionTypeOther>
+    auto unload(PositionType position, ApproachablePalletContainer<PositionTypeOther>& other_container, PositionTypeOther other_position) -> bool{
+      return move(*this,position,other_container,other_position);      
+    }
+    template<typename PositionTypeOther>
+    auto load(PositionType position, ApproachablePalletContainer<PositionTypeOther>& other_container, PositionTypeOther other_position) -> bool{
+      return move(other_container,other_position,*this,position);            
+    }
+};
 
 
 #endif // PALLET_CONTAINER_HH

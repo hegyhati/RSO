@@ -58,3 +58,13 @@ std::string
 Forklift::toString(std::string indent) const noexcept{
   return indent + "Forklift, height: " + height.toString() + ", load: " +( isLoaded() ? load_->toString() : "---");
 }
+
+#include "InputBuffer.hh"
+std::string
+InputBuffer::toString(std::string indent) const noexcept {
+  std::string toReturn = indent +"Input Buffer, max capacity:" + std::to_string(max_capacity) + endl;
+  for(uint slot=0;slot<max_capacity;++slot)
+    toReturn += indent + indentincrement + "Slot " + std::to_string(slot) + ": " 
+    + (getPallet(slot) ? getPallet(slot)->toString() : " empty ") + endl;
+  return toReturn;
+}

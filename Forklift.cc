@@ -8,11 +8,13 @@ Forklift::isLoaded() const noexcept {
   return  load_.get() != nullptr;
 }
 
-bool 
-Forklift::load(Pallet::Ptr& pallet) noexcept {
-  if( !pallet || isLoaded() ) return false;
-  else {
-    load_ = std::move(pallet);
-    return true;
-  }
+
+bool
+Forklift::isValid (bool position) const noexcept {
+  return position;
+}
+
+const Pallet::Ptr&
+Forklift::getPallet (bool position) const noexcept{
+  return load_;
 }
