@@ -37,7 +37,9 @@ class ActingPalletContainer : public PalletContainer<PositionType> {
   private:
     template<typename PTypeFrom, typename PTypeTo>
     static auto move(PalletContainer<PTypeFrom>& from_container, PTypeFrom from_position, PalletContainer<PTypeTo>& to_container, PTypeTo to_position) -> bool {
-      if (!from_container.getPallet(from_position)) return false;
+      if (! from_container.isValid(from_position)) throw WrongPositionException();
+      else if (from_container.isEmpty(from_position)) throw Pallet::NoPalletException();
+      else if (!to_container.isValid(to_position)) throw WrongPositionException();
       else if (!to_container.isEmpty(to_position)) throw OccupiedPositionException();
       else {
         const_cast<Pallet::Ptr&>(to_container.getPallet(to_position)) = std::move(const_cast<Pallet::Ptr&>(from_container.getPallet(from_position)));

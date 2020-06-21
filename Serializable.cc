@@ -56,7 +56,7 @@ PalletBlock::toString(std::string indent) const noexcept{
 #include "Forklift.hh"
 std::string 
 Forklift::toString(std::string indent) const noexcept{
-  return indent + "Forklift, height: " + height.toString() + ", load: " +( isLoaded() ? load_->toString() : "---");
+  return indent + "Forklift, height: " + height.toString() + ", load: " +( isLoaded() ? load_->toString() : "---") + endl;
 }
 
 #include "InputBuffer.hh"
