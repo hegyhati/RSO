@@ -1,6 +1,5 @@
 #include "PalletBlock.hh"
 
-
 PalletBlock::PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count)
 : lane_count(row_heights.size()), column_count(column_count) {
   pallet_lanes_.reserve(lane_count);
@@ -12,13 +11,6 @@ bool
 PalletBlock::isApproachable(Height object_height, BlockPosition position) const noexcept(false) {
   if(!isValid(position)) throw WrongPositionException();
   else return pallet_lanes_[position.lane].isApproachable(object_height,position);
-}
-
-std::ostream& 
-operator << (std::ostream& s, const PalletBlock& pb){
-  s << "Block, number of columns: " << pb.column_count << std::endl;
-  for(uint lane=0; lane<pb.lane_count; ++lane) s<<pb.pallet_lanes_[lane];
-  return s;
 }
 
 uint 

@@ -21,8 +21,6 @@ class PalletBlock : public ApproachablePalletContainer<BlockPosition>{
     PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count);
     
     auto getOrderOf(const PalletLane& lane) const noexcept -> uint;
-
-    friend std::ostream& operator << (std::ostream& s, const PalletBlock& pb);
     
   private:
     std::vector<PalletLane> pallet_lanes_;    
@@ -31,6 +29,7 @@ class PalletBlock : public ApproachablePalletContainer<BlockPosition>{
     virtual auto isValid (BlockPosition position) const noexcept -> bool override;
     virtual auto getPallet (BlockPosition position) const noexcept -> const Pallet::Ptr& override;     
     virtual auto isApproachable(Height object_height, BlockPosition position) const noexcept(false) -> bool override;
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 
 };
 

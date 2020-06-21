@@ -57,12 +57,6 @@ BasicLength::getSuggestedUnit() const {
   else return "m";
 }
 
-std::ostream& 
-operator << (std::ostream& s, const BasicLength& l){ 
-  return s << l.to(l.getSuggestedUnit()) << " " << l.getSuggestedUnit();
-}
-
-
 BasicLength::BasicLength(float length_in_meter)
   : length_in_meter_(length_in_meter) {}
 

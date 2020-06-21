@@ -24,8 +24,6 @@ class PalletLane : public ApproachablePalletContainer<LanePosition>{
     auto getTotalHeight() const noexcept-> Height;
     auto getLevelOf(const PalletRow& row) const noexcept -> uint;
     
-    friend std::ostream& operator << (std::ostream& s, const PalletLane& pl);
-
   private:
     std::vector<PalletRow> pallet_rows_;   
   
@@ -33,6 +31,7 @@ class PalletLane : public ApproachablePalletContainer<LanePosition>{
     virtual auto isValid (LanePosition position) const noexcept -> bool override;
     virtual auto getPallet (LanePosition position) const noexcept -> const Pallet::Ptr& override; 
     virtual auto isApproachable(Height object_height, LanePosition position) const noexcept(false) -> bool override;
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
 
 

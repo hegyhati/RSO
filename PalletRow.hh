@@ -32,10 +32,7 @@ class PalletRow : public PalletContainer<RowPosition>{
   public:
     virtual auto isValid (RowPosition position) const noexcept -> bool override;
     virtual auto getPallet (RowPosition position) const noexcept -> const Pallet::Ptr& override;
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
-
-std::ostream& operator << (std::ostream& s, const PalletRow& pr);
-
-
 
 #endif // PALLET_ROW_HH

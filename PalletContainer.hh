@@ -3,12 +3,13 @@
 
 #include "Length.hh"
 #include "Pallet.hh"
+#include "Serializable.hh"
 
 class WrongPositionException{};
 class OccupiedPositionException{};
 
 template <typename PositionType>
-class PalletContainer {
+class PalletContainer : public Serializable {
   public:
     using Position = PositionType;
     virtual auto isValid (Position position) const noexcept -> bool =0; 

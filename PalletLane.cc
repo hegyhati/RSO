@@ -31,13 +31,6 @@ PalletLane::isApproachable(Height object_height, LanePosition position) const no
   return true;
 }
 
-std::ostream& 
-operator << (std::ostream& s, const PalletLane& pl){
-  s << "  Lane [" << pl.block.getOrderOf(pl) << "] total height: " << pl.getTotalHeight() << std::endl;
-  for(uint row=0; row<pl.row_count; ++row) s<<pl.pallet_rows_[row];
-  return s;
-}
-
 uint 
 PalletLane::getLevelOf(const PalletRow& row) const noexcept {
   for(uint r=0; r<row_count; ++r)

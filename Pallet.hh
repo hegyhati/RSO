@@ -4,8 +4,9 @@
 #include <ostream>
 #include <memory>
 #include "Length.hh"
+#include "Serializable.hh"
 
-struct Pallet {
+struct Pallet : public Serializable {
     using Ptr = std::unique_ptr<const Pallet>;
     struct NoPalletException{};
 
@@ -18,8 +19,8 @@ struct Pallet {
 
     Pallet (const Pallet&) = delete;
     Pallet& operator= (const Pallet&) = delete;
+    
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
-
-std::ostream& operator << (std::ostream& s, const Pallet& p);
 
 #endif // PALLET_HH

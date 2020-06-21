@@ -8,7 +8,7 @@
 #include "PalletBlock.hh"
 
 
-class Forklift {
+class Forklift : public Serializable {
   public:
     struct OperationErrorException {
       std::string message;
@@ -36,7 +36,8 @@ class Forklift {
   private:
     Pallet::Ptr load_;
 
-  friend std::ostream& operator << (std::ostream& s, const Forklift& fl);
+  public:
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
 
 

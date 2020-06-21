@@ -5,8 +5,10 @@
 #include <iostream>
 #include <map>
 
+#include "Serializable.hh"
 
-class BasicLength {
+
+class BasicLength : public Serializable{
   public:
     static const std::map < const std::string, const float > unit_multipliers; 
 
@@ -31,9 +33,10 @@ class BasicLength {
   private:
     void parseFromStream(std::istream& s);
     float length_in_meter_;
+  
+  public:
+    virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
-
-std::ostream& operator << (std::ostream& s, const BasicLength& l);
 
 enum class LengthType { height, width, depth };
 

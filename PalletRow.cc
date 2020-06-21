@@ -13,14 +13,6 @@ PalletRow::getTakenSlots() const noexcept {
   return toReturn;
 }
 
-std::ostream& 
-operator << (std::ostream& s, const PalletRow& pr) {
-  s << "    Row ["<< pr.lane.getLevelOf(pr) << "] height: " << pr.height << std::endl;
-  for(auto slot: pr.getTakenSlots())
-    s << "      Slot "<< slot <<": " << pr[RowPosition{slot}] << std::endl;
-  return s;
-}
-
 bool 
 PalletRow::isValid (RowPosition position) const noexcept {
   return position.column < column_count;
