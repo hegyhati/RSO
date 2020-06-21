@@ -28,7 +28,7 @@ int main(){
   cerr << fl;
 
   cerr << "\n\n Unload content to position 0,0,0 \n\n";
-  try{fl.unload(block,{0,0,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message;}
+  try{fl.unload(block,{0,0,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message<<endl;}
   cerr << block;
   cerr << fl;
 
@@ -39,22 +39,22 @@ int main(){
   cerr << fl;
 
   cerr << "\n\n Try to unload to the same position and fail \n\n";
-  try{fl.unload(block,{0,0,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message;}
+  try{fl.unload(block,{0,0,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message<<endl;}
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position behind and fail \n\n";
-  try{fl.unload(block,{0,0,1});} catch (Forklift::OperationErrorException e) {cerr<<e.message;}
+  try{fl.unload(block,{1,0,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message<<endl;}
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position above and fail due to size \n\n";
-  try{fl.unload(block,{0,1,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message;}
+  try{fl.unload(block,{0,1,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message<<endl;}
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position above that and succeed \n\n";
-  try{fl.unload(block,{0,2,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message;}
+  try{fl.unload(block,{0,2,0});} catch (Forklift::OperationErrorException e) {cerr<<e.message<<endl;}
   cerr << block;
   cerr << fl;
   

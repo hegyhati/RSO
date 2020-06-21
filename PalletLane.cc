@@ -27,7 +27,7 @@ PalletLane::isApproachable(Height object_height, LanePosition position) const no
   uint clear_rows = std::max(position.row,object_rows-1);
   for(uint r=0; r<=clear_rows; ++r)
     for(uint c=0; c<position.column; ++c)
-      if (!isEmpty(position)) return false;
+      if (!isEmpty(LanePosition{c,r})) return false;
   return true;
 }
 
