@@ -17,13 +17,6 @@ Forklift::load(Pallet::Ptr& pallet) noexcept {
   }
 }
 
-bool 
-Forklift::unload(PalletBlock& block, PalletBlock::Position position) noexcept {
-  if( ! block.isAccessible(height,position) || ! block.isEmpty(position) ) return false;
-  else return block.put(load_,position);
-}
-
-
 std::ostream& 
 operator << (std::ostream& s, const Forklift& fl) {
   s << "Forklift, height: " << fl.height << ", load: ";

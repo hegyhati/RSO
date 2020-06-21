@@ -13,14 +13,13 @@ struct BlockPosition : LanePosition {
   uint lane;
 };
 
-class PalletBlock : public PalletContainer<BlockPosition>{
+class PalletBlock : public ApproachablePalletContainer<BlockPosition>{
   public:
     const uint lane_count;
     const uint column_count;
 
     PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count);
     
-    auto isAccessible(Height object_height, BlockPosition position) const noexcept -> bool;
     auto getOrderOf(const PalletLane& lane) const noexcept -> uint;
 
     friend std::ostream& operator << (std::ostream& s, const PalletBlock& pb);
@@ -30,7 +29,9 @@ class PalletBlock : public PalletContainer<BlockPosition>{
   
   public:
     virtual auto isValid (BlockPosition position) const noexcept -> bool override;
-    virtual auto getPallet (BlockPosition position) const noexcept -> const Pallet::Ptr& override; 
+    virtual auto getPallet (BlockPosition position) const noexcept -> const Pallet::Ptr& override;     
+    virtual auto isApproachable(Height object_height, BlockPosition position) const noexcept(false) -> bool override;
+
 };
 
 

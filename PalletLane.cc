@@ -18,10 +18,9 @@ PalletLane::getTotalHeight() const noexcept{
   return total;
 }
 
-// TODO isAccessible should be moved to Forklift or be private and called from put/take automatically.
-bool 
-PalletLane::isAccessible(Height object_height, LanePosition position) const noexcept {
-  if(position.column >= block.column_count ||  position.row >= row_count) return false;
+bool
+PalletLane::isApproachable(Height object_height, LanePosition position) const noexcept(false){
+  if (!isValid(position)) throw WrongPositionException();
   uint object_rows=0;
   for(Height row_height("0m"); row_height < object_height; ++object_rows) 
     row_height+=pallet_rows_[object_rows].height;

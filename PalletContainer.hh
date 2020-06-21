@@ -1,6 +1,7 @@
 #ifndef PALLET_CONTAINER_HH
 #define PALLET_CONTAINER_HH
 
+#include "Length.hh"
 #include "Pallet.hh"
 
 class WrongPositionException{};
@@ -32,6 +33,12 @@ class PalletContainer {
       if (!isValid(position)) throw WrongPositionException();
       else return !getPallet(position);  
     }
+};
+
+template<typename PositionType>
+class ApproachablePalletContainer : public PalletContainer<PositionType>{
+  public:
+    virtual auto isApproachable(Height object_height, PositionType position) const noexcept(false) -> bool =0;
 };
 
 

@@ -14,14 +14,13 @@ struct LanePosition : public RowPosition {
   uint row;
 };
 
-class PalletLane : public PalletContainer<LanePosition>{
+class PalletLane : public ApproachablePalletContainer<LanePosition>{
   public:
     const PalletBlock& block;
     const uint row_count;
 
     PalletLane(std::vector<Height> row_heights, PalletBlock& block);
  
-    auto isAccessible(Height object_height, LanePosition position) const noexcept -> bool;
     auto getTotalHeight() const noexcept-> Height;
     auto getLevelOf(const PalletRow& row) const noexcept -> uint;
     
@@ -33,6 +32,7 @@ class PalletLane : public PalletContainer<LanePosition>{
   public:
     virtual auto isValid (LanePosition position) const noexcept -> bool override;
     virtual auto getPallet (LanePosition position) const noexcept -> const Pallet::Ptr& override; 
+    virtual auto isApproachable(Height object_height, LanePosition position) const noexcept(false) -> bool override;
 };
 
 

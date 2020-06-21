@@ -9,9 +9,9 @@ PalletBlock::PalletBlock(std::vector<std::vector<Height>> row_heights, uint colu
 }
     
 bool 
-PalletBlock::isAccessible(Height object_height, BlockPosition position) const noexcept {
-  if (position.lane >= lane_count) return false;
-  else return pallet_lanes_[position.lane].isAccessible(object_height,position);
+PalletBlock::isApproachable(Height object_height, BlockPosition position) const noexcept(false) {
+  if(!isValid(position)) throw WrongPositionException();
+  else return pallet_lanes_[position.lane].isApproachable(object_height,position);
 }
 
 std::ostream& 
