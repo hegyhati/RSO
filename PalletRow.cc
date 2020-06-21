@@ -2,17 +2,8 @@
 #include "PalletLane.hh"
 #include "PalletBlock.hh"
 
-PalletRow::PalletRow(const Height& height, const PalletLane& lane)
-  : lane(lane), height(height), pallets_(lane.block.column_count) {}
-
-bool 
-PalletRow::put(Pallet::Ptr& pallet, uint column) noexcept {
-  if (column >= lane.block.column_count || pallets_[column] || !pallet || height < pallet->height) return false;
-  else {
-    pallets_[column] = std::move(pallet);
-    return true;
-  }
-}
+PalletRow::PalletRow(Height height, const PalletLane& lane)
+  : lane(lane), column_count(lane.block.column_count), height(height), pallets_(column_count) {}
 
 std::vector<uint> 
 PalletRow::getTakenSlots() const noexcept {
@@ -22,30 +13,22 @@ PalletRow::getTakenSlots() const noexcept {
   return toReturn;
 }
 
-const Pallet& 
-PalletRow::operator [] (uint column) const noexcept(false) {
-  if (column >= lane.block.column_count || ! pallets_[column]) throw NoPalletException();
-  else return *pallets_[column];
-}
-
-
 std::ostream& 
 operator << (std::ostream& s, const PalletRow& pr) {
-  s << "    Row ["<< pr.getLevel() << "] height: " << pr.height << std::endl;
+  s << "    Row ["<< pr.lane.getLevelOf(pr) << "] height: " << pr.height << std::endl;
   for(auto slot: pr.getTakenSlots())
-    s << "      Slot "<< slot <<": " << pr[slot] << std::endl;
+    s << "      Slot "<< slot <<": " << pr[RowPosition{slot}] << std::endl;
   return s;
 }
 
 bool 
-PalletRow::isEmpty(uint column) const noexcept {
-  if(column >= lane.block.column_count ) return false;
-  else return ! pallets_[column];
+PalletRow::isValid (RowPosition position) const noexcept {
+  return position.column < column_count;
 }
 
-uint 
-PalletRow::getLevel() const noexcept {
-  for(uint row=0; row<lane.row_count; ++row)
-    if(& (lane[row]) == this) return row;  
-  return lane.row_count;
+const Pallet::Ptr&
+PalletRow::getPallet (RowPosition position) const noexcept{
+  return pallets_[position.column];
 }
+
+

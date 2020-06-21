@@ -14,7 +14,7 @@ class Forklift {
 
     auto isLoaded() const noexcept -> bool;
     auto load(Pallet::Ptr& pallet) noexcept -> bool; // later will load(place,index) as well for unload
-    auto unload(PalletBlock& block, uint lane, uint row, uint column) noexcept -> bool;
+    auto unload(PalletBlock& block, PalletBlock::Position position) noexcept -> bool;
 
   private:
     Pallet::Ptr load_;

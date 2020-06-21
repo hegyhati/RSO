@@ -6,7 +6,8 @@
 #include "Length.hh"
 
 struct Pallet {
-    typedef std::unique_ptr<const Pallet> Ptr;
+    using Ptr = std::unique_ptr<const Pallet>;
+    struct NoPalletException{};
 
     const uint product_id;
     const Height height;

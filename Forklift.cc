@@ -18,9 +18,9 @@ Forklift::load(Pallet::Ptr& pallet) noexcept {
 }
 
 bool 
-Forklift::unload(PalletBlock& block, uint lane, uint row, uint column) noexcept {
-  if( ! block.isAccessible(height,lane,row,column) || ! block.isEmpty(lane,row,column) ) return false;
-  else return block.put(load_,lane,row,column);
+Forklift::unload(PalletBlock& block, PalletBlock::Position position) noexcept {
+  if( ! block.isAccessible(height,position) || ! block.isEmpty(position) ) return false;
+  else return block.put(load_,position);
 }
 
 

@@ -27,7 +27,7 @@ int main(){
   cerr << fl;
 
   cerr << "\n\n Unload content to position 0,0,0 \n\n";
-  fl.unload(block,0,0,0);
+  fl.unload(block,{0,0,0});
   cerr << block;
   cerr << fl;
 
@@ -38,22 +38,22 @@ int main(){
   cerr << fl;
 
   cerr << "\n\n Try to unload to the same position and fail \n\n";
-  fl.unload(block,0,0,0);
+  fl.unload(block,{0,0,0});
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position behind and fail \n\n";
-  fl.unload(block,0,0,1);
+  fl.unload(block,{0,0,1});
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position above and fail due to size \n\n";
-  fl.unload(block,0,1,0);
+  fl.unload(block,{0,1,0});
   cerr << block;
   cerr << fl;
 
   cerr << "\n\n Try to unload to the position above that and succeed \n\n";
-  fl.unload(block,0,2,0);
+  fl.unload(block,{0,2,0});
   cerr << block;
   cerr << fl;
   

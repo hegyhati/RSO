@@ -3,27 +3,35 @@
 
 #include "Length.hh"
 #include "PalletLane.hh"
+#include "PalletContainer.hh"
 
 #include <iostream>
 #include <vector>
 
-class PalletBlock {
+
+struct BlockPosition : LanePosition {
+  uint lane;
+};
+
+class PalletBlock : public PalletContainer<BlockPosition>{
   public:
     const uint lane_count;
     const uint column_count;
 
     PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count);
     
-    auto operator [] (uint lane) const noexcept -> const PalletLane& ;
-    auto put(Pallet::Ptr& pallet, uint lane, uint row, uint column) noexcept -> bool;
-    auto isEmpty(uint lane, uint row, uint column) const noexcept -> bool;
-    auto isAccessible(Height object_height, uint lane, uint row, uint column) const noexcept -> bool;
+    auto isAccessible(Height object_height, BlockPosition position) const noexcept -> bool;
+    auto getOrderOf(const PalletLane& lane) const noexcept -> uint;
+
+    friend std::ostream& operator << (std::ostream& s, const PalletBlock& pb);
     
   private:
     std::vector<PalletLane> pallet_lanes_;    
+  
+  public:
+    virtual auto isValid (BlockPosition position) const noexcept -> bool override;
+    virtual auto getPallet (BlockPosition position) const noexcept -> const Pallet::Ptr& override; 
 };
-
-std::ostream& operator << (std::ostream& s, const PalletBlock& pb);
 
 
 

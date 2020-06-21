@@ -5,28 +5,33 @@
 #include <memory>
 #include <optional>
 
+#include "PalletContainer.hh"
 #include "Pallet.hh"
 #include "Length.hh"
 
 class PalletLane;
 
-class NoPalletException {};
+struct RowPosition{
+  uint column;
+};
 
-class PalletRow {
+class PalletRow : public PalletContainer<RowPosition>{
   public:
     const PalletLane& lane;
+    const uint& column_count;
     const Height height;
 
-    PalletRow(const Height& height, const PalletLane& lane);
-    
-    auto operator [] (uint column) const noexcept(false) -> const Pallet& ;
-    auto put(Pallet::Ptr& pallet, uint column) noexcept -> bool;
-    auto getTakenSlots() const noexcept -> std::vector<uint>;
-    auto isEmpty(uint column) const noexcept -> bool;
-    auto getLevel() const noexcept -> uint;
+    PalletRow(Height height, const PalletLane& lane);
+
+    auto getTakenSlots() const noexcept -> std::vector<uint>;    
     
   private:
-    std::vector<Pallet::Ptr> pallets_;    
+    std::vector<Pallet::Ptr> pallets_;   
+  
+
+  public:
+    virtual auto isValid (RowPosition position) const noexcept -> bool override;
+    virtual auto getPallet (RowPosition position) const noexcept -> const Pallet::Ptr& override;
 };
 
 std::ostream& operator << (std::ostream& s, const PalletRow& pr);
