@@ -10,17 +10,17 @@
 
 
 struct BlockPosition : LanePosition {
-  uint lane;
+  size_t lane;
 };
 
 class PalletBlock : public ApproachablePalletContainer<BlockPosition>{
   public:
-    const uint lane_count;
-    const uint column_count;
+    const size_t lane_count;
+    const size_t column_count;
 
-    PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count);
+    PalletBlock(std::vector<std::vector<Height>> row_heights, size_t column_count);
     
-    auto getOrderOf(const PalletLane& lane) const noexcept -> uint;
+    auto getOrderOf(const PalletLane& lane) const noexcept -> size_t;
     
   private:
     std::vector<PalletLane> pallet_lanes_;    

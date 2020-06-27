@@ -12,18 +12,18 @@
 class PalletLane;
 
 struct RowPosition{
-  uint column;
+  size_t column;
 };
 
 class PalletRow : public PalletContainer<RowPosition>{
   public:
     const PalletLane& lane;
-    const uint& column_count;
+    const size_t& column_count;
     const Height height;
 
     PalletRow(Height height, const PalletLane& lane);
 
-    auto getTakenSlots() const noexcept -> std::vector<uint>;    
+    auto getTakenSlots() const noexcept -> std::vector<size_t>;    
     
   private:
     std::vector<Pallet::Ptr> pallets_;   

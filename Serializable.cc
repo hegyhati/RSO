@@ -38,7 +38,7 @@ PalletRow::toString(std::string indent) const noexcept{
 std::string 
 PalletLane::toString(std::string indent) const noexcept{
   std::string toReturn = indent + "Lane [" + std::to_string(block.getOrderOf(*this)) + "] total height: " + getTotalHeight().toString() + endl;
-  for(uint row=0; row<row_count; ++row) 
+  for(size_t row=0; row<row_count; ++row) 
     toReturn += pallet_rows_[row].toString(indent+indentincrement);
   return toReturn;
 }
@@ -47,7 +47,7 @@ PalletLane::toString(std::string indent) const noexcept{
 std::string 
 PalletBlock::toString(std::string indent) const noexcept{
   std::string toReturn = "Block, number of columns: " + std::to_string(column_count) + endl;
-  for(uint lane=0; lane<lane_count; ++lane)
+  for(size_t lane=0; lane<lane_count; ++lane)
     toReturn += pallet_lanes_[lane].toString(indent+indentincrement);
   return toReturn;
 }
@@ -63,7 +63,7 @@ Forklift::toString(std::string indent) const noexcept{
 std::string
 InputBuffer::toString(std::string indent) const noexcept {
   std::string toReturn = indent +"Input Buffer, max capacity:" + std::to_string(max_capacity) + endl;
-  for(uint slot=0;slot<max_capacity;++slot)
+  for(size_t slot=0;slot<max_capacity;++slot)
     toReturn += indent + indentincrement + "Slot " + std::to_string(slot) + ": " 
     + (getPallet(slot) ? getPallet(slot)->toString() : " empty ") + endl;
   return toReturn;

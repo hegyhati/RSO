@@ -1,9 +1,9 @@
 #include "PalletBlock.hh"
 
-PalletBlock::PalletBlock(std::vector<std::vector<Height>> row_heights, uint column_count)
+PalletBlock::PalletBlock(std::vector<std::vector<Height>> row_heights, size_t column_count)
 : lane_count(row_heights.size()), column_count(column_count) {
   pallet_lanes_.reserve(lane_count);
-  for (uint lane=0; lane<lane_count; ++lane)
+  for (size_t lane=0; lane<lane_count; ++lane)
     pallet_lanes_.emplace_back(row_heights[lane],*this);
 }
     
@@ -13,9 +13,9 @@ PalletBlock::isApproachable(Height object_height, BlockPosition position) const 
   else return pallet_lanes_[position.lane].isApproachable(object_height,position);
 }
 
-uint 
+size_t 
 PalletBlock::getOrderOf(const PalletLane& lane) const noexcept {
-  for(uint l=0; l<lane_count; ++l)
+  for(size_t l=0; l<lane_count; ++l)
     if (& (pallet_lanes_[l]) == &lane) return l;
   return lane_count;
 }

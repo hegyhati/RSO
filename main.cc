@@ -35,19 +35,19 @@ struct TestSystem : public Serializable{
       cin >> response;
       if (response == "q");
       else if (response == "g"){
-        uint id;
+        size_t id;
         cin >> id;
         Height height(cin);
         input_buffer.generateNewPallet(id,height);
       } else if (response == "l") {
-        uint pos;
+        size_t pos;
         cin >> pos;
         try { forklift.load(true,input_buffer,pos); } 
         catch (OccupiedPositionException) { cout << "Forklift already has a load\n"; toPrint=false;}
         catch (WrongPositionException) {cout << "No such position at the input buffer\n"; toPrint=false;}
         catch (Pallet::NoPalletException) {cout << "No pallet at that position in the input buffer\n"; toPrint=false;}
       } else if (response == "u") {
-        uint lane,row,column;
+        size_t lane,row,column;
         cin >> lane >> row >> column;
         try { forklift.unload(true,block,BlockPosition{column,row,lane});}
         catch (OccupiedPositionException) { cout << "Position already occupied in the block\n"; toPrint=false;}

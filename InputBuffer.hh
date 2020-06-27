@@ -5,21 +5,21 @@
 #include "Pallet.hh"
 #include "PalletContainer.hh"
 
-class InputBuffer : public ApproachablePalletContainer<uint>{
+class InputBuffer : public ApproachablePalletContainer<size_t>{
   public:
-    const uint max_capacity;
+    const size_t max_capacity;
 
-    InputBuffer(uint max_capacity);
+    InputBuffer(size_t max_capacity);
     // change argument later to string, adn then it will get data from elsewhere
-    auto generateNewPallet(uint id, Height height) noexcept -> void;
+    auto generateNewPallet(size_t id, Height height) noexcept -> void;
     
   private:
     std::vector<Pallet::Ptr> pallets_;    
   
   public:
-    virtual auto isValid (uint position) const noexcept -> bool override;
-    virtual auto getPallet (uint position) const noexcept -> const Pallet::Ptr& override;     
-    virtual auto isApproachable(Height object_height, uint position) const noexcept(false) -> bool override;
+    virtual auto isValid (size_t position) const noexcept -> bool override;
+    virtual auto getPallet (size_t position) const noexcept -> const Pallet::Ptr& override;     
+    virtual auto isApproachable(Height object_height, size_t position) const noexcept(false) -> bool override;
     virtual auto toString(std::string indent="") const noexcept -> std::string override;
 };
 

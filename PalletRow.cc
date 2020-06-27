@@ -5,10 +5,10 @@
 PalletRow::PalletRow(Height height, const PalletLane& lane)
   : lane(lane), column_count(lane.block.column_count), height(height), pallets_(column_count) {}
 
-std::vector<uint> 
+std::vector<size_t> 
 PalletRow::getTakenSlots() const noexcept {
-  std::vector<uint> toReturn;
-  for(uint i=0; i<lane.block.column_count; ++i)
+  std::vector<size_t> toReturn;
+  for(size_t i=0; i<lane.block.column_count; ++i)
     if(pallets_[i]) toReturn.push_back(i);
   return toReturn;
 }

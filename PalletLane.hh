@@ -11,18 +11,18 @@
 class PalletBlock;
 
 struct LanePosition : public RowPosition {
-  uint row;
+  size_t row;
 };
 
 class PalletLane : public ApproachablePalletContainer<LanePosition>{
   public:
     const PalletBlock& block;
-    const uint row_count;
+    const size_t row_count;
 
     PalletLane(std::vector<Height> row_heights, PalletBlock& block);
  
     auto getTotalHeight() const noexcept-> Height;
-    auto getLevelOf(const PalletRow& row) const noexcept -> uint;
+    auto getLevelOf(const PalletRow& row) const noexcept -> size_t;
     
   private:
     std::vector<PalletRow> pallet_rows_;   

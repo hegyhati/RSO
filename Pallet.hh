@@ -10,11 +10,11 @@ struct Pallet : public Serializable {
     using Ptr = std::unique_ptr<const Pallet>;
     struct NoPalletException{};
 
-    const uint product_id;
+    const size_t product_id;
     const Height height;
     const float quantity;
 
-    Pallet (const uint product_id, const Height height, const float quantity=0)
+    Pallet (const size_t product_id, const Height height, const float quantity=0)
       : product_id(product_id), height(height), quantity(quantity) {}
 
     Pallet (const Pallet&) = delete;
