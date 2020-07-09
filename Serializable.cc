@@ -4,15 +4,24 @@ const std::string Serializable::endl="\n";
 const std::string Serializable::indentincrement="  ";
 
 #include "Length.hh"
+
 std::string
-BasicLength::toString (std::string indent) const noexcept{ 
-  return  std::to_string(to(getSuggestedUnit())) + " " + getSuggestedUnit();
+BasicLength::toString (std::string) const noexcept {
+  return std::to_string(to(getSuggestedUnit())) + " " + getSuggestedUnit();
+}
+
+QVariantMap
+BasicLength::toVariantMap() const noexcept {
+  QVariantMap res;
+  res["length"] = length_in_meter_;
+  return res;
 }
 
 
 #include "Pallet.hh"
+
 std::string
-Pallet::toString(std::string indent) const noexcept{
+Pallet::toString(std::string indent) const noexcept {
   return indent
     + "[ "
     + "Product: " + std::to_string(product_id)
@@ -23,18 +32,31 @@ Pallet::toString(std::string indent) const noexcept{
     + " ]";
 }
 
+QVariantMap
+Pallet::toVariantMap() const noexcept {
+  QVariantMap res;
+  res["product"] = product_id;
+  res["height"] = height.to("meter");
+  res["quantity"] = quantity;
+  return res;
+}
+
+
 #include "PalletRow.hh"
 #include "PalletLane.hh"
-std::string 
-PalletRow::toString(std::string indent) const noexcept{
+
+std::string
+PalletRow::toString(std::string indent) const noexcept {
   std::string toReturn = indent +"Row [" + std::to_string(lane.getLevelOf(*this)) + "] height: " + height.toString() + endl;
   for(auto slot: getTakenSlots())
     toReturn += indent + indentincrement + "Slot " + std::to_string(slot) + ": " + getPallet({slot})->toString() + endl;
   return toReturn;
 }
 
+
 #include "PalletLane.hh"
 #include "PalletBlock.hh"
+
 std::string 
 PalletLane::toString(std::string indent) const noexcept{
   std::string toReturn = indent + "Lane [" + std::to_string(block.getOrderOf(*this)) + "] total height: " + getTotalHeight().toString() + endl;
@@ -43,7 +65,9 @@ PalletLane::toString(std::string indent) const noexcept{
   return toReturn;
 }
 
+
 #include "PalletBlock.hh"
+
 std::string 
 PalletBlock::toString(std::string indent) const noexcept{
   std::string toReturn = "Block, number of columns: " + std::to_string(column_count) + endl;
@@ -54,12 +78,21 @@ PalletBlock::toString(std::string indent) const noexcept{
 
 
 #include "Forklift.hh"
+
 std::string 
 Forklift::toString(std::string indent) const noexcept{
-  return indent + "Forklift, height: " + height.toString() + ", load: " +( isLoaded() ? load_->toString() : "---") + endl;
+    return indent + "Forklift, height: " + height.toString() + ", load: " +( isLoaded() ? load_->toString() : "---") + endl;
 }
 
+QVariantMap
+Forklift::toVariantMap() const noexcept {
+    if (!isLoaded()) return QVariantMap();
+    return load_->toVariantMap();
+}
+
+
 #include "InputBuffer.hh"
+
 std::string
 InputBuffer::toString(std::string indent) const noexcept {
   std::string toReturn = indent +"Input Buffer, max capacity:" + std::to_string(max_capacity) + endl;

@@ -35,7 +35,8 @@ class BasicLength : public Serializable{
     float length_in_meter_;
   
   public:
-    virtual auto toString(std::string indent="") const noexcept -> std::string override;
+    auto toString(std::string indent="") const noexcept -> std::string override;
+    auto toVariantMap() const noexcept -> QVariantMap override;
 };
 
 enum class LengthType { height, width, depth };

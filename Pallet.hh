@@ -20,7 +20,8 @@ struct Pallet : public Serializable {
     Pallet (const Pallet&) = delete;
     Pallet& operator= (const Pallet&) = delete;
     
-    virtual auto toString(std::string indent="") const noexcept -> std::string override;
+    auto toString(std::string indent="") const noexcept -> std::string override;
+    auto toVariantMap() const noexcept -> QVariantMap override;
 };
 
 #endif // PALLET_HH
