@@ -20,6 +20,10 @@ public:
 
     QHash<int, QByteArray> roleNames() const override { return roles_; }
 
+public slots:
+    Q_INVOKABLE
+    virtual void interact(int index) = 0;
+
 protected:
     QHash<int, QByteArray> roles_;
 };

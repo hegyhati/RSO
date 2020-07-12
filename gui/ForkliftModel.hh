@@ -29,6 +29,13 @@ public:
             return QString::fromStdString(forklift_->getPallet(true)->toString());
         return forklift_->toVariantMap()[roles_[role]];
     }
+
+public slots:
+    void interact(int) override
+    {}
+
+    friend class InputBufferModel;
+
 private:
     Forklift* forklift_;
 };

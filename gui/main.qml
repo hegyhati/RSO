@@ -13,6 +13,7 @@ ApplicationWindow {
     property alias inputBufferModel: inputBuffer.model
 
     component PalletDelegate : Rectangle {
+        required property int index
         required property string product
         required property double size
         required property double quantity
@@ -72,7 +73,12 @@ ApplicationWindow {
                         anchors.fill: parent
                         spacing: appWindow.margin
                         required model
-                        delegate: PalletDelegate {}
+                        delegate: PalletDelegate {
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: inputBufferModel.interact(index)
+                            }
+                        }
                     }
                 }
             }

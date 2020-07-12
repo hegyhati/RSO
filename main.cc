@@ -30,7 +30,7 @@ int main(int argc, char ** argv){
     forklift.load(true, input_buffer, 0u);
 
     ForkliftModel forkliftModel(forklift);
-    InputBufferModel inputbufferModel(input_buffer);
+    InputBufferModel inputbufferModel(input_buffer, forkliftModel);
 
     QVariantMap qmlProps;
     qmlProps["forkliftModel"] = QVariant::fromValue(&forkliftModel);
