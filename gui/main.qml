@@ -49,8 +49,8 @@ ApplicationWindow {
             GroupBox {
                 title: "Forklift"
                 Layout.fillWidth: true
-                Layout.minimumHeight: 82
-                Layout.maximumHeight: 82
+                Layout.minimumHeight: 86
+                Layout.maximumHeight: 86
 
                 ListView {
                     id: forklift
@@ -87,19 +87,24 @@ ApplicationWindow {
                     }
                 }
             }
-        }
+        } // Left Pane
 
         ColumnLayout {
             id: rightPaneLayout
             spacing: appWindow.margin
             Layout.fillWidth: true
+            Layout.fillHeight: true
 
             RowLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 spacing: appWindow.margin
+
                 GroupBox {
                     title: "Front View"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 500
 
                     ButtonGroup { id: laneGroup }
 
@@ -109,6 +114,7 @@ ApplicationWindow {
                         orientation: ListView.Horizontal
                         model: blockModel
                         spacing: appWindow.margin
+                        clip: true
 
                         delegate: ColumnLayout {
                             width: 152
@@ -120,6 +126,7 @@ ApplicationWindow {
                                 width: parent.width
                                 model: submodel
                                 spacing: appWindow.margin
+                                clip: true
                                 verticalLayoutDirection: ListView.BottomToTop
                                 delegate: PalletDelegate {
                                     MouseArea {
@@ -139,13 +146,14 @@ ApplicationWindow {
                                 }
                             }
                         }
-                    }
-                }
+                    } // Front View List
+                } // Front View Box
 
                 GroupBox {
-                    title: "Side View"
+                    title: "Side View (Back -> Front)"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredWidth: 500
 
                     ListView {
                         id: sideView
@@ -153,6 +161,7 @@ ApplicationWindow {
                         width: parent.width
                         verticalLayoutDirection: ListView.BottomToTop
                         spacing: appWindow.margin
+                        clip: true
 
                         delegate: ListView {
                             id: rowView
@@ -160,6 +169,7 @@ ApplicationWindow {
                             height: 32
                             model: submodel
                             spacing: appWindow.margin
+                            clip: true
                             orientation: ListView.Horizontal
                             layoutDirection: ListView.RightToLeft
                             delegate: PalletDelegate {
@@ -169,18 +179,9 @@ ApplicationWindow {
                                 }
                             }
                         }
-
-                        Rectangle {
-                            id: wall
-                            anchors.left: parent.left
-                            width: 2
-                            height: parent.height
-                            border.width: 2
-                            color: "transparent"
-                        }
                     }
-                }
-            }
+                } // Side View Box
+            } // RowLayout
 
             GroupBox {
                 id: bottomPane
@@ -189,6 +190,6 @@ ApplicationWindow {
                 Layout.minimumHeight: 200
                 Layout.maximumHeight: 400
             }
-        }
-    }
+        } // Right Pane
+    } // Main Layout
 }
