@@ -1,6 +1,7 @@
 #define QT_FATAL_WARNINGS
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickStyle>
 #include <QVariantMap>
 
 #include "TestSystem.hh"
@@ -40,6 +41,8 @@ int main(int argc, char ** argv){
     qmlProps["forkliftModel"] = QVariant::fromValue(&forkliftModel);
     qmlProps["inputBufferModel"] = QVariant::fromValue(&inputbufferModel);
     qmlProps["blockModel"] = QVariant::fromValue(&blockModel);
+
+    QQuickStyle::setStyle("Universal");
 
     QQmlApplicationEngine engine;
     engine.setInitialProperties(qmlProps);
