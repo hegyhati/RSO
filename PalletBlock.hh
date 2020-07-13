@@ -21,6 +21,8 @@ class PalletBlock : public ApproachablePalletContainer<BlockPosition>{
     PalletBlock(std::vector<std::vector<Height>> row_heights, size_t column_count);
     
     auto getOrderOf(const PalletLane& lane) const noexcept -> size_t;
+
+    auto getRowCountOf(size_t lane) const noexcept -> size_t;
     
   private:
     std::vector<PalletLane> pallet_lanes_;    

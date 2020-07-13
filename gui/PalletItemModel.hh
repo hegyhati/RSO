@@ -10,12 +10,14 @@ public:
         roles_[ProductRole] = "product";
         roles_[SizeRole] = "size";
         roles_[QuantityRole] = "quantity";
+        roles_[SubModelRole] = "submodel";
     }
 
     enum PalletRoles {
         ProductRole = Qt::UserRole + 1,
         SizeRole,
-        QuantityRole
+        QuantityRole,
+        SubModelRole
     };
 
     QHash<int, QByteArray> roleNames() const override { return roles_; }

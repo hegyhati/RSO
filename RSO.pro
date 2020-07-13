@@ -47,6 +47,9 @@ HEADERS += \
     Pallet.hh \
     PalletRow.hh \
     Serializable.hh \
+    gui/BlockModel.hh \
     gui/ForkliftModel.hh \
     gui/InputBufferModel.hh \
-    gui/PalletItemModel.hh
+    gui/LaneModel.hh \
+    gui/PalletItemModel.hh \
+    gui/RowModel.hh

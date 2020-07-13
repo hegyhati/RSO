@@ -20,6 +20,10 @@ PalletBlock::getOrderOf(const PalletLane& lane) const noexcept {
   return lane_count;
 }
 
+size_t PalletBlock::getRowCountOf(size_t lane) const noexcept {
+    return pallet_lanes_[lane].row_count;
+}
+
 bool 
 PalletBlock::isValid (BlockPosition position) const noexcept {
   return position.lane < lane_count && pallet_lanes_[position.lane].isValid(position);
