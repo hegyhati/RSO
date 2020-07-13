@@ -7,6 +7,9 @@ ApplicationWindow {
     title: "Racking System Optimizer"
     visible: true
     visibility: "Maximized"
+    minimumWidth: 640
+    minimumHeight: 480
+
     property int margin: 11
 
     property alias forkliftModel: forklift.model
@@ -19,7 +22,7 @@ ApplicationWindow {
         required property double size
         required property double quantity
         height: 30
-        width: parent.width
+        width: 150
         color: "#ABC"
         opacity: product == "" ? 0.5 : 1
         border.width: 1
@@ -40,13 +43,14 @@ ApplicationWindow {
             id: leftPaneLayout
             spacing: appWindow.margin
             Layout.fillHeight: true
-            Layout.minimumWidth: 150
-            Layout.maximumWidth: 250
+            Layout.minimumWidth: 174
+            Layout.maximumWidth: 174
 
             GroupBox {
                 title: "Forklift"
                 Layout.fillWidth: true
-                Layout.minimumHeight: 72
+                Layout.minimumHeight: 82
+                Layout.maximumHeight: 82
 
                 ListView {
                     id: forklift
@@ -97,14 +101,17 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
+                    ButtonGroup { id: laneGroup }
+
                     ListView {
                         id: frontView
                         anchors.fill: parent
                         orientation: ListView.Horizontal
                         model: blockModel
                         spacing: appWindow.margin
+
                         delegate: ColumnLayout {
-                            width: 150
+                            width: 152
                             height: parent.height
 
                             ListView {
@@ -122,7 +129,15 @@ ApplicationWindow {
                                 }
                             }
 
-                            RadioButton { Layout.alignment: Qt.AlignHCenter } // TODO
+                            RadioDelegate {
+                                Layout.alignment: Qt.AlignHCenter
+                                ButtonGroup.group: laneGroup
+                                checked: index == 0
+                                text: "Lane " + index
+                                onCheckedChanged: function() {
+                                    if (checked) sideView.model = submodel
+                                }
+                            }
                         }
                     }
                 }
@@ -131,6 +146,39 @@ ApplicationWindow {
                     title: "Side View"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
+                    ListView {
+                        id: sideView
+                        anchors.fill: parent
+                        width: parent.width
+                        verticalLayoutDirection: ListView.BottomToTop
+                        spacing: appWindow.margin
+
+                        delegate: ListView {
+                            id: rowView
+                            width: parent.width
+                            height: 32
+                            model: submodel
+                            spacing: appWindow.margin
+                            orientation: ListView.Horizontal
+                            layoutDirection: ListView.RightToLeft
+                            delegate: PalletDelegate {
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: rowView.model.interact(index)
+                                }
+                            }
+                        }
+
+                        Rectangle {
+                            id: wall
+                            anchors.left: parent.left
+                            width: 2
+                            height: parent.height
+                            border.width: 2
+                            color: "transparent"
+                        }
+                    }
                 }
             }
 
@@ -138,6 +186,8 @@ ApplicationWindow {
                 id: bottomPane
                 title: "Controls and Information"
                 Layout.fillWidth: true
+                Layout.minimumHeight: 200
+                Layout.maximumHeight: 400
             }
         }
     }

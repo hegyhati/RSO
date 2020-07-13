@@ -35,8 +35,20 @@ public:
 
 public slots:
     Q_INVOKABLE
-    void interact(int) override
-    {}
+    void interact(int index) override {
+        BlockPosition pos = {(size_t)index,row_,lane_};
+        if (block_->isEmpty(pos) == forkliftModel_->forklift_->isEmpty(true))
+            return;
+        try {
+            if (block_->isEmpty(pos)) {
+                forkliftModel_->forklift_->unload(true, *block_, pos);
+            } else {
+                forkliftModel_->forklift_->load(true, *block_, pos);
+            }
+            forkliftModel_->endResetModel();
+            endResetModel();
+        } catch (const NotApproachableException&) {}
+    }
 
 private:
     PalletBlock* block_;

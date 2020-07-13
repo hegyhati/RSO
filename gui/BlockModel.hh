@@ -18,6 +18,7 @@ public:
     {
         for (size_t i = 0; i < block.lane_count; ++i) {
             submodels_[i] = new LaneModel(block, i, forkliftModel, this);
+            connect(submodels_[i], &LaneModel::modelReset, this, &BlockModel::endResetModel);
         }
     }
 

@@ -18,6 +18,7 @@ public:
     {
         for (size_t i = 0; (int)i < submodels_.size(); ++i) {
             submodels_[i] = new RowModel(block, lane, i, forkliftModel, this);
+            connect(submodels_[i], &RowModel::modelReset, this, &LaneModel::endResetModel);
         }
     }
 
