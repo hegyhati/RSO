@@ -21,7 +21,6 @@ public:
     }
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override {
-        Q_UNUSED(role);
         if (0 > index.row() || index.row() >= (int)inputbuffer_->max_capacity || index.column() != 0 || !inputbuffer_)
             return QVariant();
         const Pallet::Ptr& p = inputbuffer_->getPallet(index.row());

@@ -20,7 +20,6 @@ public:
     }
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override {
-        Q_UNUSED(role);
         if (index.row() != 0 || index.column() != 0 || !forklift_)
             return QVariant();
         if (!forklift_->isLoaded())
