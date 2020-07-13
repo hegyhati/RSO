@@ -46,8 +46,31 @@ public:
 
 public slots:
     Q_INVOKABLE
-    void interact(int) override
-    {}
+    void interact(int index) override {
+        const size_t row = index;
+        // find the first pallet in the requested row
+        size_t col;
+        for (col = 0; block_->isValid(BlockPosition{col,row,lane_}); ++col) {
+            if (!block_->isEmpty(BlockPosition{col,row,lane_})) {
+                break;
+            }
+        }
+        try {
+            if (forkliftModel_->forklift_->isEmpty(true)) { // forklift is empty, try to load it
+                if (!block_->isValid(BlockPosition{col,row,lane_})) // row is empty too
+                    return;
+                forkliftModel_->forklift_->load(true, *block_, BlockPosition{col,row,lane_});
+                forkliftModel_->endResetModel();
+                endResetModel();
+            } else { // forklift is loaded, try to unload it
+                if (col == 0) // row is full
+                    return;
+                forkliftModel_->forklift_->unload(true, *block_, BlockPosition{col-1,row,lane_});
+                forkliftModel_->endResetModel();
+                endResetModel();
+            }
+        } catch (const NotApproachableException&) {}
+    }
 
 private:
     PalletBlock* block_;

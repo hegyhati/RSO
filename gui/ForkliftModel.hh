@@ -34,6 +34,8 @@ public slots:
     {}
 
     friend class InputBufferModel;
+    friend class LaneModel;
+    friend class RowModel;
 
 private:
     Forklift* forklift_;

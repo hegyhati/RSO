@@ -11,6 +11,7 @@ ApplicationWindow {
 
     property alias forkliftModel: forklift.model
     property alias inputBufferModel: inputBuffer.model
+    property variant blockModel
 
     component PalletDelegate : Rectangle {
         required property int index
@@ -92,14 +93,41 @@ ApplicationWindow {
             RowLayout {
                 spacing: appWindow.margin
                 GroupBox {
-                    id: frontView
                     title: "Front View"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
+                    ListView {
+                        id: frontView
+                        anchors.fill: parent
+                        orientation: ListView.Horizontal
+                        model: blockModel
+                        spacing: appWindow.margin
+                        delegate: ColumnLayout {
+                            width: 150
+                            height: parent.height
+
+                            ListView {
+                                id: laneView
+                                Layout.fillHeight: true
+                                width: parent.width
+                                model: submodel
+                                spacing: appWindow.margin
+                                verticalLayoutDirection: ListView.BottomToTop
+                                delegate: PalletDelegate {
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: laneView.model.interact(index)
+                                    }
+                                }
+                            }
+
+                            RadioButton { Layout.alignment: Qt.AlignHCenter } // TODO
+                        }
+                    }
                 }
 
                 GroupBox {
-                    id: sideView
                     title: "Side View"
                     Layout.fillWidth: true
                     Layout.fillHeight: true

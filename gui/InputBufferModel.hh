@@ -34,7 +34,7 @@ public:
 public slots:
     Q_INVOKABLE
     void interact(int index) override {
-        if (index < 0 || !forkliftModel_->forklift_->isLoaded() == inputbuffer_->isEmpty(index)) // both empty or full
+        if (index < 0 || forkliftModel_->forklift_->isEmpty(true) == inputbuffer_->isEmpty(index)) // both empty or full
             return;
         beginResetModel();
         forkliftModel_->beginResetModel();

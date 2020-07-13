@@ -7,6 +7,7 @@
 
 #include "gui/ForkliftModel.hh"
 #include "gui/InputBufferModel.hh"
+#include "gui/BlockModel.hh"
 
 using namespace std;
 
@@ -22,19 +23,23 @@ int main(int argc, char ** argv){
     PalletBlock block = PalletBlock({
       {"2m","3m","4m"},
       {"12cm", "1500cm","19m"},
-      {"4cm","8km","6in","4ft"}
-    }, 19);
+      {"4cm","8km","6in","4ft"},
+      {"12cm", "1500cm","19m"}
+    }, 5);
 
     input_buffer.generateNewPallet(0, "3m");
     input_buffer.generateNewPallet(1, "1m");
     forklift.load(true, input_buffer, 0u);
+    forklift.unload(true, block, BlockPosition{0, 0, 0});
 
     ForkliftModel forkliftModel(forklift);
     InputBufferModel inputbufferModel(input_buffer, forkliftModel);
+    BlockModel blockModel(block, forkliftModel);
 
     QVariantMap qmlProps;
     qmlProps["forkliftModel"] = QVariant::fromValue(&forkliftModel);
     qmlProps["inputBufferModel"] = QVariant::fromValue(&inputbufferModel);
+    qmlProps["blockModel"] = QVariant::fromValue(&blockModel);
 
     QQmlApplicationEngine engine;
     engine.setInitialProperties(qmlProps);
