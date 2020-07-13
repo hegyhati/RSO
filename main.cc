@@ -30,7 +30,7 @@ int main(int argc, char ** argv){
 
     input_buffer.generateNewPallet(0, "3m");
     input_buffer.generateNewPallet(1, "1m");
-    forklift.load(true, input_buffer, 0u);
+    forklift.load(true, input_buffer, (size_t)0);
     forklift.unload(true, block, BlockPosition{0, 0, 0});
 
     ForkliftModel forkliftModel(forklift);

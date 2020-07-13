@@ -35,7 +35,7 @@ Pallet::toString(std::string indent) const noexcept {
 QVariantMap
 Pallet::toVariantMap() const noexcept {
   QVariantMap res;
-  res["product"] = product_id;
+  res["product"] = (int)product_id;
   res["height"] = height.to("meter");
   res["quantity"] = quantity;
   return res;
